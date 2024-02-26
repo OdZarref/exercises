@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" id="number_input" placeholder="Type a decimal or binary number">
+    <input type="button" value="=" onclick="decimalOrBinary()">
+    <script>
+        function decimalOrBinary() {
+            let numberInput = document.querySelector('#number_input').value
+            let decimal = false
+
+            for (let i = 0; i < numberInput.length; i++) {
+                if (Number(numberInput[i]) > 1) {
+                    decimal = true
+                }
+            }
+
+            if (decimal){
+                decimalToBinary(numberInput)
+            } else {
+                binaryToDecimal(numberInput)
+            }
+        }
+
+        function decimalToBinary(number) {
+            number = Number(number)
+            let binary = String()
+            let results = Array()
+            results.push(number)
+
+            while (number > 1) {
+                result = Math.floor(number / 2)
+                results.push(result)
+                number = result
+            }
+            for (let i = results.length - 1; i >= 0; i--) {
+                if (isEven(results[i])) {
+                    binary = binary + '0'
+                } else {
+                    binary = binary + '1'
+                }
+            }
+            console.log(binary)
+            alert('Em binário é ' + binary.toString())
+        }
+            
+        function isEven(number) {
+            if (number % 2 === 0) {
+                return true
+            }
+        }
+
+        function binaryToDecimal(number) {
+            function doubleOneToAPoint(number) {
+                let results = Array()
+
+                for (let i = 0; i < number.length; i++) {
+                    if (results.length) {
+                        results.push(results[results.length - 1] * 2)
+                    } else {
+                        results.push(1)
+                    }
+                }
+                return results.reverse()
+            }
+            
+            let results = doubleOneToAPoint(number)
+            let binaryNumberLength = doubleOneToAPoint(number).length
+            let binaryNumber = number
+            let decimalNumber = Number()
+
+            for (let i = binaryNumberLength - 1; i >= 0; i--) {
+                if (binaryNumber[i] === '1') {
+                    decimalNumber += results[i]
+                }
+            }
+            console.log('Em decimal é ', decimalNumber)
+            alert('Em decimal é ' + decimalNumber.toString())
+            
+        }
+
+    </script>
+</body>
+</html>
